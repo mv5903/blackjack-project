@@ -3,13 +3,21 @@ package blackjack;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This is where everything comes together! Note that betting is not finished
+ * yet, so the game will not make sense for betting, however the logic still
+ * works just fine.
+ * 
+ * @author Matthew Vandenberg
+ *
+ */
 public class Main {
 	public static int currentPlayer, numPlayers, turns = 0;
-	public static final int TIME = 1000; //simulates a computer thinking
-	public static ArrayList<Hand> hands;//every player has their own hand
+	public static final int TIME = 1000; // simulates a computer thinking
+	public static ArrayList<Hand> hands;// every player has their own hand
 	public static ArrayList<Bet> bets;
 	public static Scanner kbd = new Scanner(System.in);
-	public static ArrayList<String> winners = new ArrayList<String>(); 
+	public static ArrayList<String> winners = new ArrayList<String>();
 
 	public static void main(String[] args) {
 		begin();
@@ -32,9 +40,10 @@ public class Main {
 	}
 
 	public static void startTurn() {
-		if (hands.get(currentPlayer).containsAce()) { //will show additional amount if an ace is in the hand
+		if (hands.get(currentPlayer).containsAce()) { // will show additional amount if an ace is in the hand
 			System.out.println("Player " + currentPlayer + ", it's your turn. Your first two cards are "
-					+ hands.get(currentPlayer) + "\t(Total: " + hands.get(currentPlayer).sumOfCards() + " / " + (hands.get(currentPlayer).sumOfCards() + 10) + ")");
+					+ hands.get(currentPlayer) + "\t(Total: " + hands.get(currentPlayer).sumOfCards() + " / "
+					+ (hands.get(currentPlayer).sumOfCards() + 10) + ")");
 		} else {
 			System.out.println("Player " + currentPlayer + ", it's your turn. Your first two cards are "
 					+ hands.get(currentPlayer) + "\t(Total: " + hands.get(currentPlayer).sumOfCards() + ")");
@@ -59,7 +68,8 @@ public class Main {
 		sleep();
 		if (decision == 1) {
 			hands.get(currentPlayer).addCard();
-			System.out.println("Your hand is now: " + hands.get(currentPlayer) + "\t(Total: " + hands.get(currentPlayer).sumOfCards() + ")");
+			System.out.println("Your hand is now: " + hands.get(currentPlayer) + "\t(Total: "
+					+ hands.get(currentPlayer).sumOfCards() + ")");
 			if (hands.get(currentPlayer).containsAce()) {
 				System.out.println("Would you like your ace to count as a 1 or 11?");
 				int choice = kbd.nextInt();
@@ -120,7 +130,8 @@ public class Main {
 
 	public static void dealerDidNotBust() {
 		for (int i = 1; i < numPlayers + 1; i++) {
-			if (hands.get(0).containsAce() && 10 + hands.get(0).sumOfCards() > hands.get(i).sumOfCards() && 10 + hands.get(0).sumOfCards() <= 21) {
+			if (hands.get(0).containsAce() && 10 + hands.get(0).sumOfCards() > hands.get(i).sumOfCards()
+					&& 10 + hands.get(0).sumOfCards() <= 21) {
 				i++;
 			} else if (hands.get(0).sumOfCards() < hands.get(i).sumOfCards() && hands.get(i).sumOfCards() <= 21
 					&& !winners.contains("Player " + i)) {
@@ -167,15 +178,15 @@ public class Main {
 		}
 
 	}
-	
+
 	public static void clearHands() {
 		winners.clear();
-		for (Hand h: hands) {
+		for (Hand h : hands) {
 			h.clearAllHands();
 		}
 		hands.clear();
 	}
-	
+
 	public static void sleep() {
 		try {
 			Thread.sleep(TIME);

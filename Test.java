@@ -1,5 +1,11 @@
 package blackjack;
 
+/**
+ * For testing purposes (Ignore this) :)
+ * 
+ * @author Matthew Vandenberg
+ *
+ */
 public class Test {
 
 	public static void main(String[] args) {
