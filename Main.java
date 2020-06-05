@@ -6,7 +6,8 @@ import java.util.Scanner;
 public class Main {
 	public static int currentPlayer, numPlayers, turns = 0;
 	public static final int TIME = 1000; //simulates a computer thinking
-	public static ArrayList<Hand> hands; //every player has their own hand
+	public static ArrayList<Hand> hands;//every player has their own hand
+	public static ArrayList<Bet> bets;
 	public static Scanner kbd = new Scanner(System.in);
 	public static ArrayList<String> winners = new ArrayList<String>(); 
 
@@ -16,17 +17,22 @@ public class Main {
 
 	public static void begin() {
 		hands = new ArrayList<Hand>(); // where index 0 is dealer
+		bets = new ArrayList<Bet>();
 		System.out.println("Welcome to Blackjack! How many players will be playing (not including the dealer)?");
 		numPlayers = kbd.nextInt();
+		System.out.println("How much is everyone starting with?");
+		int startAmount = kbd.nextInt();
 		currentPlayer = 1;
-		for (int i = 0; i < numPlayers + 1; i++) {
+		for (int i = 0; i <= numPlayers; i++) {
+			bets.add(new Bet(startAmount));
 			hands.add(new Hand());
 		}
+		Bet.createPot();
 		startTurn();
 	}
 
 	public static void startTurn() {
-		if (hands.get(currentPlayer).containsAce()) {
+		if (hands.get(currentPlayer).containsAce()) { //will show additional amount if an ace is in the hand
 			System.out.println("Player " + currentPlayer + ", it's your turn. Your first two cards are "
 					+ hands.get(currentPlayer) + "\t(Total: " + hands.get(currentPlayer).sumOfCards() + " / " + (hands.get(currentPlayer).sumOfCards() + 10) + ")");
 		} else {
@@ -34,7 +40,7 @@ public class Main {
 					+ hands.get(currentPlayer) + "\t(Total: " + hands.get(currentPlayer).sumOfCards() + ")");
 		}
 		if (hands.get(currentPlayer).sumOfCards() == 21
-				|| (hands.get(currentPlayer).sumOfCards() == 11 && hands.get(currentPlayer).contains(1))) {
+				|| (hands.get(currentPlayer).sumOfCards() == 11 && hands.get(currentPlayer).containsAce())) {
 			System.out.println("BLACKJACK! Next player's turn...");
 			winners.add("Player " + currentPlayer);
 			if (numPlayers == 1) {
@@ -46,6 +52,8 @@ public class Main {
 	}
 
 	public static void turn() {
+		System.out.println("Player " + currentPlayer + ", place your bet!");
+		bets.get(currentPlayer).placeBet(kbd.nextInt());
 		System.out.println("What would you like to do? \n1: Hit \n2: Stand");
 		int decision = kbd.nextInt();
 		sleep();
@@ -91,7 +99,7 @@ public class Main {
 				System.out.println("DEALER BUSTS");
 				afterDealerBust();
 				break;
-			} else if (hands.get(0).contains(1) && hands.get(0).sumOfCards() + 10 >= 17) {
+			} else if (hands.get(0).containsAce() && hands.get(0).sumOfCards() + 10 >= 17) {
 				break; // If dealer's hand contains an ace (1 or 11)
 			} else if (hands.get(0).sumOfCards() >= 17) {
 				break;
@@ -112,7 +120,7 @@ public class Main {
 
 	public static void dealerDidNotBust() {
 		for (int i = 1; i < numPlayers + 1; i++) {
-			if (hands.get(0).contains(1) && 10 + hands.get(0).sumOfCards() > hands.get(i).sumOfCards() && 10 + hands.get(0).sumOfCards() <= 21) {
+			if (hands.get(0).containsAce() && 10 + hands.get(0).sumOfCards() > hands.get(i).sumOfCards() && 10 + hands.get(0).sumOfCards() <= 21) {
 				i++;
 			} else if (hands.get(0).sumOfCards() < hands.get(i).sumOfCards() && hands.get(i).sumOfCards() <= 21
 					&& !winners.contains("Player " + i)) {

@@ -22,9 +22,9 @@ public class Hand {
 		nextCard++;
 	}
 	/**
-	 * Overloaded version of {@link #addCard()} which will add a fake card to the player's
+	 * Overloaded version of {@link #addCard()} which will add a fake card worth 10 points to the player's
 	 *  hand to simulate a situation where a player may want an ace to count for 11 points 
-	 *  rather than 1. This will cause {@link #sumOfCards()} to add 10 points becuase of this
+	 *  rather than 1. This will cause also cause {@link #sumOfCards()} to add 10 points becuase of this
 	 *  extra card.
 	 * @param hasAce True indicates that this method should be used over {@link #addCard()}.
 	 */
@@ -47,7 +47,10 @@ public class Hand {
 		}
 		return sum;
 	}
-	
+	/**
+	 * Simpler way to see if a certain hand contains an ace, rather than a specific card.
+	 * @return True if the current hand contains an ace.
+	 */
 	public boolean containsAce() {
 		for (Card c: hand ) {
 			if (c.getValue() == 1) {

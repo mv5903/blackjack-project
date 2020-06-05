@@ -26,6 +26,10 @@ public class CardDeck {
 		return temp;
 	}
 	
+	public ArrayList<Integer> getOrder() {
+		return newOrder;
+	}
+	
 	public void shuffleDeck() {
 		Card[] newCards = new Card[52];
 		generateNewOrder();
