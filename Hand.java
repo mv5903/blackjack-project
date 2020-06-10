@@ -27,19 +27,6 @@ public class Hand {
 	}
 
 	/**
-	 * Overloaded version of {@link #addCard()} which will add a fake card worth 10
-	 * points to the player's hand to simulate a situation where a player may want
-	 * an ace to count for 11 points rather than 1. This will cause also cause
-	 * {@link #sumOfCards()} to add 10 points becuase of this extra card.
-	 * 
-	 * @param hasAce True indicates that this method should be used over
-	 *               {@link #addCard()}.
-	 */
-	public void addCard(boolean hasAce) {
-		hand.add(new Card(0, 10));
-	}
-
-	/**
 	 * Resets {@link #hand} so that there are no more cards in anyone's hand.
 	 */
 	public void clearAllHands() {
@@ -52,6 +39,24 @@ public class Hand {
 	 * @return Sum of values of all the cards in a hand.
 	 */
 	public int sumOfCards() {
+		int sum = 0;
+		for (Card c : hand) {
+			if (c.getValue() >= 10 && c.getValue() <= 13) {
+				sum += 10;
+			} else {
+				sum += c.getValue();
+			}
+		}
+		if (containsAce() && sum() <= 11) {
+			sum += 10;
+		}
+		return sum;
+	}
+	/**
+	 * Helper method for {@link #sumOfCards()}. Not used elsewhere.
+	 * @return Sum of cards not considering an ace.
+	 */
+	private int sum() {
 		int sum = 0;
 		for (Card c : hand) {
 			if (c.getValue() >= 10 && c.getValue() <= 13) {
