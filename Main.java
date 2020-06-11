@@ -23,6 +23,7 @@ public class Main {
 	}
 
 	public Main() {
+		hands.get(0).grabNewCardDeck(); // dealer needs to shuffle the cards
 		winners.clear();
 		currentPlayer = 1;
 		for (Hand h : hands) {
@@ -51,6 +52,7 @@ public class Main {
 		displayHand();
 		if (hands.get(currentPlayer).sumOfCards() == 21) {
 			System.out.println("Blackjack! You won this round!");
+			winners.add("Player " + currentPlayer);
 			determineNextPlayer();
 		}
 		System.out.println("Player " + currentPlayer + ", what would you like to do?");
@@ -100,16 +102,24 @@ public class Main {
 	 * <br>
 	 * 1. The sum of a player's hand is greater than that of the dealer's hand, and
 	 * the player's hand is less than 21. <br>
-	 * 2. The sum of the dealer's hand is greater than 21. <br>
-	 * 3. Any player's hand is equal to exactly 21.
+	 * 2. The sum of the dealer's hand is greater than 21.<br>
+	 * 3. Any player's hand is equal to 21 as a result of a blackjack, which is
+	 * handled automatically in {@link #nextPlayersTurn()}.<br>
+	 * <br>
+	 * Note that the purpose of the continue will skip checking for a winner for
+	 * that current player if it has already been added because of a player
+	 * receiving a blackjack during their turn.
+	 * 
 	 */
 	public static void compareWithOthers() {
 		if (hands.get(0).sumOfCards() > 21) {
 			System.out.println("Dealer Busts.");
 		}
 		for (int i = 1; i <= numPlayers; i++) {
-			if (((hands.get(i).sumOfCards() > hands.get(0).sumOfCards() && !winners.contains("Player " + i))
-					&& hands.get(i).sumOfCards() <= 21)
+			if (winners.contains("Player " + i)) {
+				continue;
+			}
+			if (((hands.get(i).sumOfCards() > hands.get(0).sumOfCards()) && hands.get(i).sumOfCards() <= 21)
 					|| (hands.get(0).sumOfCards() > 21 && hands.get(i).sumOfCards() <= 21)
 					|| hands.get(i).sumOfCards() == 21) {
 				winners.add("Player " + i);

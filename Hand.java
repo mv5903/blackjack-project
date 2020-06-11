@@ -20,6 +20,11 @@ public class Hand {
 	public int getNextCard() {
 		return nextCard;
 	}
+	
+	public void grabNewCardDeck() {
+		cd = new CardDeck();
+		nextCard = 0;
+	}
 
 	public void addCard() {
 		hand.add(cd.getCard(nextCard));
