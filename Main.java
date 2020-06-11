@@ -26,7 +26,6 @@ public class Main {
 	 * Reinitializes and resets parts of the game so that it can be ran again.
 	 */
 	public Main() {
-
 		hands.get(0).grabNewCardDeck(); // dealer needs to shuffle the cards
 		winners.clear();
 		currentPlayer = 1;
@@ -80,7 +79,6 @@ public class Main {
 		while (isHitting) {
 			if (hands.get(currentPlayer).sumOfCards() > 21) {
 				System.out.println("Bust!");
-				bets.get(currentPlayer).lose();
 				sleep();
 				determineNextPlayer();
 			}
@@ -146,6 +144,11 @@ public class Main {
 					|| hands.get(i).sumOfCards() == 21) {
 				winners.add("Player " + i);
 				bets.get(i).win();
+			}
+		}
+		for (int i = 1; i <= numPlayers; i++) {
+			if (!winners.contains("Player " + i)) {
+				bets.get(i).lose();
 			}
 		}
 		System.out.println("Winners: ");
