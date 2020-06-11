@@ -2,6 +2,12 @@ package blackjack;
 
 import java.util.ArrayList;
 
+/**
+ * A deck of Cards are handled in this class accordingly.
+ * 
+ * @author Matthew Vandenberg
+ *
+ */
 public class CardDeck {
 	private Card[] deck = new Card[52];
 	private ArrayList<Integer> newOrder = new ArrayList<Integer>(); // used for creating a new order for shuffling cards
@@ -14,7 +20,7 @@ public class CardDeck {
 	/**
 	 * Creates a new array of cards in numerical/suit order.
 	 * 
-	 * @return the card array in order
+	 * @return The card array in order
 	 */
 	public Card[] createCardArray() {
 		Card[] temp = new Card[52];

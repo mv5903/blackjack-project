@@ -1,5 +1,11 @@
 package blackjack;
 
+/**
+ * This is the Card class where all things related to cards happen.
+ * 
+ * @author Matthew Vandenberg
+ *
+ */
 public class Card {
 	private int value;
 	private int suit; // where 0, 1, 2, 3, is spades diamonds clubs hearts in that order

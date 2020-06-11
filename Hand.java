@@ -2,6 +2,12 @@ package blackjack;
 
 import java.util.ArrayList;
 
+/**
+ * This hand class simulates a real player's hand.
+ * 
+ * @author Matthew Vandenberg
+ *
+ */
 public class Hand {
 	private CardDeck cd = new CardDeck();
 	private ArrayList<Card> hand = new ArrayList<Card>();
@@ -20,7 +26,7 @@ public class Hand {
 	public int getNextCard() {
 		return nextCard;
 	}
-	
+
 	public void grabNewCardDeck() {
 		cd = new CardDeck();
 		nextCard = 0;
@@ -39,7 +45,9 @@ public class Hand {
 	}
 
 	/**
-	 * Running total of cards in a hand. Ace is always counted as 1.
+	 * Running total of cards in a hand. Ace is always counted as 1 unless the sum
+	 * of a hand is less than 11, where it then makes more sense for an ace to be
+	 * counted as an 11.
 	 * 
 	 * @return Sum of values of all the cards in a hand.
 	 */
@@ -52,13 +60,15 @@ public class Hand {
 				sum += c.getValue();
 			}
 		}
-		if (containsAce() && sum() <= 11) {
+		if (containsAce() && sum() < 11) {
 			sum += 10;
 		}
 		return sum;
 	}
+
 	/**
 	 * Helper method for {@link #sumOfCards()}. Not used elsewhere.
+	 * 
 	 * @return Sum of cards not considering an ace.
 	 */
 	private int sum() {
@@ -77,7 +87,7 @@ public class Hand {
 	 * Simpler way to see if a certain hand contains an ace, rather than a specific
 	 * card.
 	 * 
-	 * @return true or false if the current hand contains an ace.
+	 * @return True or false if the current hand contains an ace.
 	 */
 	public boolean containsAce() {
 		for (Card c : hand) {

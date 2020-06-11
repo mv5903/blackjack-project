@@ -1,41 +1,36 @@
 package blackjack;
 
 /**
- * This is in progress. Check back at a later time.
+ * Betting is now fully implemented and works as expected.
  * 
  * @author Matthew Vandenberg
  *
  */
 public class Bet {
-	private int startAmount;
-	private static int pot;
+	private int amountBet;
+	private int playerBalance;
 
 	public Bet(int startAmount) {
-		this.startAmount = startAmount;
-	}
-
-	public static void createPot() {
-		pot = 0;
-	}
-
-	public void setBet(int startAmount) {
-		this.startAmount = startAmount;
-	}
-
-	public int getStartAmount() {
-		return startAmount;
+		playerBalance = startAmount;
 	}
 
 	public void placeBet(int bet) {
-		startAmount -= bet;
-		pot += bet;
+		amountBet = bet;
 	}
 
-	public int getPot() {
-		return pot;
+	public int getCurrentBalance() {
+		return playerBalance;
 	}
 
-	public String toString() {
-		return "Bet: " + startAmount;
+	public void win() {
+		playerBalance += amountBet;
+	}
+
+	public void lose() {
+		playerBalance -= amountBet;
+	}
+
+	public void blackjack() {
+		playerBalance += (amountBet * 1.5);
 	}
 }
